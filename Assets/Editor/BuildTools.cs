@@ -6,6 +6,7 @@ using UnityEngine;
 public class BuildTools : MonoBehaviour
 {
     // Start is called before the first frame update
+    private static string AndroidKeyPass = "123456";
     void Start()
     {
     }
@@ -18,10 +19,14 @@ public class BuildTools : MonoBehaviour
     [MenuItem("Tools/Build APK")]
     public static void BuildApk()
     {
-        BuildPlayerOptions opt = new BuildPlayerOptions();
-        opt.scenes = new string[] {"Assets/Scenes/SampleScene.unity"};
-        opt.locationPathName = Application.dataPath + "/../Bin/test.apk";
-        opt.target = BuildTarget.Android;
+        PlayerSettings.Android.keyaliasPass = AndroidKeyPass;
+        PlayerSettings.Android.keystorePass = AndroidKeyPass;
+        BuildPlayerOptions opt = new BuildPlayerOptions
+        {
+            scenes = new string[] {"Assets/Scenes/SampleScene.unity"},
+            locationPathName = Application.dataPath + "/../Bin/test.apk",
+            target = BuildTarget.Android
+        };
 
         BuildPipeline.BuildPlayer(opt);
         Debug.Log("Build App Done!");
